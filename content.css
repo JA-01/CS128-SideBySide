@@ -1,0 +1,313 @@
+body.cs128-sidebyside-active {
+  overflow: hidden !important;
+}
+
+body.cs128-sidebyside-active .container-xl.page-layout {
+  display: none !important;
+}
+
+button.cs128-sbs-popout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 10px;
+  white-space: nowrap;
+}
+
+.cs128-sbs-direction-icon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+button[data-direction="left"] > .cs128-sbs-direction-icon {
+  transform: scaleX(-1);
+}
+
+button.cs128-sbs-popout-button.cs128-sbs-button-in-row {
+  margin: 0;
+}
+
+#cs128-sidebyside-app {
+  --sbs-bg: var(--bs-body-bg);
+  --sbs-muted: #737d91;
+  --sbs-line: #dfe4ee;
+  --sbs-accent: #5668e8;
+  position: fixed;
+  z-index: 1020;
+  inset: var(--sbs-top-offset, 56px) 0 0;
+  display: grid;
+  grid-template-areas: "instructions divider workspace";
+  grid-template-columns: minmax(0, var(--sbs-start-size, 1fr)) 8px minmax(0, var(--sbs-end-size, 1fr));
+  gap: 0;
+  background: var(--sbs-line);
+  isolation: isolate;
+}
+
+html[data-bs-theme="dark"] #cs128-sidebyside-app {
+  --sbs-muted: #a3acbb;
+  --sbs-line: #3a414d;
+  --sbs-accent: #9aa7ff;
+}
+
+#cs128-sidebyside-app,
+#cs128-sidebyside-app * {
+  box-sizing: border-box;
+}
+
+#cs128-sidebyside-app.cs128-sbs-code-left {
+  grid-template-areas: "workspace divider instructions";
+}
+
+#cs128-sidebyside-app .cs128-sbs-divider {
+  position: relative;
+  z-index: 2;
+  grid-area: divider;
+  min-width: 0;
+  min-height: 0;
+  background: var(--sbs-bg);
+  cursor: col-resize;
+  touch-action: none;
+}
+
+#cs128-sidebyside-app .cs128-sbs-divider::before,
+#cs128-sidebyside-app .cs128-sbs-divider::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+#cs128-sidebyside-app .cs128-sbs-divider::before {
+  width: 1px;
+  height: 100%;
+  background: var(--sbs-line);
+}
+
+#cs128-sidebyside-app .cs128-sbs-divider::after {
+  width: 3px;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--sbs-muted);
+}
+
+#cs128-sidebyside-app .cs128-sbs-divider:hover::after,
+#cs128-sidebyside-app .cs128-sbs-divider:focus-visible::after,
+#cs128-sidebyside-app.cs128-sbs-resizing .cs128-sbs-divider::after {
+  background: var(--sbs-accent);
+}
+
+#cs128-sidebyside-app .cs128-sbs-divider:focus-visible {
+  outline: 2px solid var(--sbs-accent);
+  outline-offset: -2px;
+}
+
+#cs128-sidebyside-app.cs128-sbs-resizing {
+  user-select: none;
+}
+
+#cs128-sidebyside-app.cs128-sbs-resizing::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  content: "";
+  cursor: col-resize;
+}
+
+#cs128-sidebyside-app .cs128-sbs-pane {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  background: var(--sbs-bg);
+}
+
+#cs128-sidebyside-app .cs128-sbs-instructions {
+  grid-area: instructions;
+}
+
+#cs128-sidebyside-app .cs128-sbs-workspace {
+  grid-area: workspace;
+}
+
+#cs128-sidebyside-app .cs128-sbs-scroll {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+#cs128-sidebyside-app .cs128-sbs-instruction-scroll {
+  padding: 24px clamp(16px, 2vw, 32px) 72px;
+}
+
+#cs128-sidebyside-app .cs128-sbs-instruction-scroll > .page-content {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+}
+
+#cs128-sidebyside-app .cs128-sbs-workspace-scroll {
+  padding: 18px clamp(12px, 1.8vw, 26px) 48px;
+}
+
+#cs128-sidebyside-app .page-toc-mobile {
+  display: none !important;
+}
+
+#cs128-sidebyside-app .cs128-sbs-workspace-mount {
+  width: 100%;
+  margin: 0 auto;
+}
+
+#cs128-sidebyside-app .cs128-sbs-workspace-mount > .block__frame {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+#cs128-sidebyside-app .cs128-sbs-workspace-mount .activity-workspace,
+#cs128-sidebyside-app .cs128-sbs-workspace-mount .activity-light,
+#cs128-sidebyside-app .cs128-sbs-workspace-mount .editor,
+#cs128-sidebyside-app .cs128-sbs-workspace-mount .ace_editor {
+  max-width: 100%;
+}
+
+/* Keep the controls in the site's navbar while split view is open. */
+.topbar-128.cs128-sbs-navbar {
+  height: auto;
+  min-height: 56px;
+  flex-wrap: wrap;
+  row-gap: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.topbar-128.cs128-sbs-navbar > .topbar-128__group:first-child {
+  min-width: 0;
+  flex: 1 1 180px;
+}
+
+.topbar-128.cs128-sbs-navbar .topbar-128__breadcrumb {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.topbar-128.cs128-sbs-navbar > .topbar-128__group:last-child {
+  flex-shrink: 0;
+}
+
+.topbar-128.cs128-sbs-navbar [aria-label="Course tools"] {
+  display: none !important;
+}
+
+.topbar-128.cs128-sbs-navbar .dropdown:has(> #dropdownTools) {
+  display: block !important;
+}
+
+#cs128-sbs-navbar-controls {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+#cs128-sbs-navbar-controls,
+#cs128-sbs-navbar-controls * {
+  box-sizing: border-box;
+}
+
+#cs128-sbs-navbar-controls .cs128-sbs-side-control {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--core-btn-save-border);
+  border-radius: calc(0.3rem + 3px);
+  background: var(--core-btn-save-bg);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 22%);
+}
+
+#cs128-sbs-navbar-controls .cs128-sbs-side-control button {
+  white-space: nowrap;
+}
+
+#cs128-sbs-navbar-controls .cs128-sbs-side-control button:not(.history-active) {
+  border-color: transparent;
+  background: transparent;
+  color: var(--core-btn-save-color);
+}
+
+#cs128-sbs-navbar-controls .cs128-sbs-side-control button:not(.history-active):hover {
+  background: var(--core-btn-save-hover-bg);
+}
+
+#cs128-sbs-navbar-controls .cs128-sbs-return-top,
+#cs128-sbs-navbar-controls .cs128-sbs-center {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+#cs128-sidebyside-app .cs128-sbs-prompt-card {
+  margin: 0 0 18px;
+}
+
+#cs128-sidebyside-app .cs128-sbs-prompt-card[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 620px) {
+  #cs128-sidebyside-app {
+    grid-template-areas:
+      "instructions"
+      "divider"
+      "workspace";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, var(--sbs-start-size, 1fr)) 8px minmax(0, var(--sbs-end-size, 1fr));
+  }
+
+  #cs128-sidebyside-app.cs128-sbs-code-left {
+    grid-template-areas:
+      "workspace"
+      "divider"
+      "instructions";
+  }
+
+  #cs128-sidebyside-app .cs128-sbs-divider,
+  #cs128-sidebyside-app.cs128-sbs-resizing::after {
+    cursor: row-resize;
+  }
+
+  #cs128-sidebyside-app .cs128-sbs-divider::before {
+    width: 100%;
+    height: 1px;
+  }
+
+  #cs128-sidebyside-app .cs128-sbs-divider::after {
+    width: 32px;
+    height: 3px;
+  }
+
+  #cs128-sidebyside-app .cs128-sbs-instruction-scroll {
+    padding: 16px 14px 36px;
+  }
+
+  #cs128-sidebyside-app .cs128-sbs-workspace-scroll {
+    padding: 12px 10px 28px;
+  }
+}
