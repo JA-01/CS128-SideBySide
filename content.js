@@ -26,6 +26,19 @@
   const pageLayout = () => document.querySelector("#content .container-xl.page-layout");
   const pageContent = () => pageLayout()?.querySelector(":scope > .page-content");
 
+  async function accessLocalStorage(operation) {
+    try {
+      // Open tabs can retain this script after an extension reload or update.
+      // Keep the pane controls usable even when extension storage is gone.
+      if (!globalThis.chrome?.runtime?.id) return;
+      return await operation(chrome.storage.local);
+    } catch (error) {
+      if (!error?.message?.includes("Extension context invalidated")) {
+        console.warn("CS128 SideBySide: Could not access pane preferences.", error);
+      }
+    }
+  }
+
   function activityTitle(section, frame) {
     if (frame.querySelector(".block-title")) {
       return frame.querySelector(".block-title").innerText.trim();
@@ -174,7 +187,7 @@
     });
     navbarControls.querySelector(".cs128-sbs-return-top").dataset.direction = lessonSide();
     updateButtons();
-    chrome.storage.local.set({ codeSide: side });
+    accessLocalStorage((storage) => storage.set({ codeSide: side }));
     refreshEditors();
   }
 
@@ -458,12 +471,10 @@
 
   document.addEventListener("turbolinks:before-cache", () => exitSplitView(true));
   document.addEventListener("turbolinks:load", scheduleInstall);
-  const sidePreferenceLoaded = new Promise((resolve) => {
-    chrome.storage.local.get({ codeSide: "right" }, (settings) => {
-      codeSide = settings.codeSide === "left" ? "left" : "right";
+  const sidePreferenceLoaded = accessLocalStorage((storage) => storage.get({ codeSide: "right" }))
+    .then((settings) => {
+      codeSide = settings?.codeSide === "left" ? "left" : "right";
       updateButtons();
-      resolve();
     });
-  });
   scheduleInstall();
 })();

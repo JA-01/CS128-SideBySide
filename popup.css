@@ -1,8 +1,8 @@
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #202638;
-  background: #fff;
+  color: #edf0f7;
+  background: #171a21;
 }
 
 * { box-sizing: border-box; }
@@ -10,7 +10,7 @@
 body {
   width: 290px;
   margin: 0;
-  background: #fff;
+  background: #171a21;
 }
 
 .popup { padding: 18px; }
@@ -20,7 +20,7 @@ body {
   align-items: center;
   gap: 11px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #e8ebf2;
+  border-bottom: 1px solid #343a46;
 }
 
 .brand img {
@@ -28,25 +28,37 @@ body {
   flex: 0 0 auto;
 }
 
+.brand-copy { min-width: 0; }
+
 .brand h1 {
   margin: 0;
-  color: #202638;
+  color: #f2f4fa;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
+.repo-link {
+  display: inline-block;
+  margin-top: 4px;
+  color: #aab5ff;
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.repo-link:hover { text-decoration: underline; }
+
 .author { padding-top: 14px; }
 
 .author p {
   margin: 0 0 4px;
-  color: #4e586d;
+  color: #c0c6d3;
   font-size: 12px;
   font-weight: 600;
 }
 
 .author a {
-  color: #5668e8;
+  color: #aab5ff;
   font-size: 12px;
   text-decoration: none;
 }
@@ -55,6 +67,6 @@ body {
 
 .version {
   margin: 15px 0 0;
-  color: #838b9b;
+  color: #8992a2;
   font-size: 10px;
 }
